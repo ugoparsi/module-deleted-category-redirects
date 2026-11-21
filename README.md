@@ -4,7 +4,7 @@ Redirect an old category URL to the closest available parent in the same store v
 
 ## Install
 
-The package targets the Maho 27.1 series and requires PHP 8.5.1 or later. The Composer installation was tested on Maho 27.1 development commit `2de25e973` with MariaDB 12.3.4. The routing tests also ran on SQLite. A stable 27.1 release is pending.
+The package requires PHP 8.5.1 or later. The Composer installation and HTTP tests passed on Maho 26.11.3 with SQLite and on Maho 27.1 development commit `2de25e973` with MariaDB 12.3.4.
 
 For a local preview, place this package in `../category-redirect-package` relative to the store project. Install it from the store project through a Composer path repository.
 
@@ -14,7 +14,7 @@ composer require ugoparsi/module-deleted-category-redirects:^0.1
 ./maho migrate
 ```
 
-For a Maho 27.1 source checkout, set `COMPOSER_ROOT_VERSION=27.1.x-dev` on the Composer require command.
+For a Maho source checkout, set `COMPOSER_ROOT_VERSION` on the Composer require command. Use `26.11.3` for that tag or `27.1.x-dev` for the development branch tested here.
 
 ## Enable redirects
 
@@ -28,10 +28,10 @@ The module records canonical category paths from deletions made while it is enab
 
 ## Test
 
-Install the package in an isolated Maho 27.1 source checkout. The tests create their own categories, CMS page and store view. This command uses a checkout configured at `http://localhost:8929/`.
+Install the package in an isolated Maho source checkout. The tests create their own categories, CMS page and store view. Set the port to match the checkout's base URL. This example uses `http://localhost:8939/`.
 
 ```bash
-MAHO_BROWSER_PORT=8929 vendor/bin/pest vendor/ugoparsi/module-deleted-category-redirects/tests/Integration/DeletedCategoryFallbackTest.php
+MAHO_BROWSER_PORT=8939 vendor/bin/pest vendor/ugoparsi/module-deleted-category-redirects/tests/Integration/DeletedCategoryFallbackTest.php
 ```
 
 ## License

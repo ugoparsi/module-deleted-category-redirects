@@ -121,15 +121,15 @@ final class Storefront_CategoryRedirect_Model_Observer
     private function findTarget(Mage_Core_Model_Store $store, string $ancestorIds, array $sourcePaths): ?string
     {
         $storeId = (int) $store->getId();
-        $categories = Mage::getService('catalog/category');
+        $categoryHelper = Mage::helper('catalog/category');
         foreach (explode(',', $ancestorIds) as $ancestorId) {
             $categoryId = (int) $ancestorId;
             if ($categoryId === (int) $store->getRootCategoryId()) {
                 break;
             }
-            try {
-                $categories->getVisibleById($categoryId, $storeId);
-            } catch (Mage_Core_Exception_NoSuchEntity) {
+
+            $category = Mage::getModel('catalog/category')->setStoreId($storeId)->load($categoryId);
+            if (!$categoryHelper->canShow($category)) {
                 continue;
             }
 
@@ -142,12 +142,36 @@ final class Storefront_CategoryRedirect_Model_Observer
                 continue;
             }
 
-            return Mage::getModel('core/url')->getDirectUrl($targetPath, [
-                '_store' => $storeId,
+            $url = Mage::getModel('core/url')->setStore($store);
+            return $url->getDirectUrl($targetPath, [
                 '_nosid' => true,
-                '_query' => Mage::helper('core/url')->getCanonicalStoreQuery($store),
+                '_query' => $this->storeQuery($store, $url),
             ]);
         }
         return null;
+    }
+
+    /** @return array<string, string> */
+    private function storeQuery(Mage_Core_Model_Store $store, Mage_Core_Model_Url $url): array
+    {
+        $helper = Mage::helper('core/url');
+        if (method_exists($helper, 'getCanonicalStoreQuery')) {
+            return $helper->getCanonicalStoreQuery($store);
+        }
+
+        $baseUrl = $url->getBaseUrl();
+        $website = $store->getWebsite();
+        $group = $store->getGroup();
+        $websiteDefault = $website ? $website->getDefaultStore() : null;
+        $groupDefault = $group ? $group->getDefaultStore() : null;
+        foreach ([$websiteDefault, $groupDefault] as $defaultStore) {
+            if ($defaultStore
+                && (int) $defaultStore->getId() !== (int) $store->getId()
+                && Mage::getModel('core/url')->setStore($defaultStore)->getBaseUrl() === $baseUrl
+            ) {
+                return ['___store' => $store->getCode()];
+            }
+        }
+        return [];
     }
 }
