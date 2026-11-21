@@ -2,15 +2,15 @@
 
 Redirect an old category URL to the closest available parent in the same store view. The setting starts off.
 
-## Install
+## Install the preview
 
 The package requires PHP 8.5.1 or later. The Composer installation and HTTP tests passed on Maho 26.11.3 with SQLite and on Maho 27.1 development commit `2de25e973` with MariaDB 12.3.4.
 
-For a local preview, place this package in `../category-redirect-package` relative to the store project. Install it from the store project through a Composer path repository.
+From your Maho Composer project, register the GitHub repository and install the preview.
 
 ```bash
-composer config repositories.deleted-category-redirects '{"type":"path","url":"../category-redirect-package","options":{"symlink":false,"versions":{"ugoparsi/module-deleted-category-redirects":"0.1.0"}}}'
-composer require ugoparsi/module-deleted-category-redirects:^0.1
+composer config repositories.deleted-category-redirects vcs https://github.com/ugoparsi/module-deleted-category-redirects
+composer require ugoparsi/module-deleted-category-redirects:dev-main
 ./maho migrate
 ```
 
