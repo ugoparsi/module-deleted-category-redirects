@@ -4,9 +4,9 @@ Redirect an old category URL to the closest available parent in the same store v
 
 ## Install
 
-The package targets the Maho 27.1 series and requires PHP 8.5.1 or later. The local preview was validated on the 27.1 development branch. A stable 27.1 release is pending.
+The package targets the Maho 27.1 series and requires PHP 8.5.1 or later. The Composer installation was tested on Maho 27.1 development commit `2de25e973` with MariaDB 12.3.4. The routing tests also ran on SQLite. A stable 27.1 release is pending.
 
-For a local preview, place this package in `../category-redirect-package` relative to the store project and run from the project:
+For a local preview, place this package in `../category-redirect-package` relative to the store project. Install it from the store project through a Composer path repository.
 
 ```bash
 composer config repositories.deleted-category-redirects '{"type":"path","url":"../category-redirect-package","options":{"symlink":false,"versions":{"ugoparsi/module-deleted-category-redirects":"0.1.0"}}}'
@@ -28,7 +28,7 @@ The module records canonical category paths from deletions made while it is enab
 
 ## Test
 
-Install the package in an isolated Maho 27.1 source checkout. The tests create their own categories, CMS page and store view. For a checkout configured at `http://localhost:8929/`, run:
+Install the package in an isolated Maho 27.1 source checkout. The tests create their own categories, CMS page and store view. This command uses a checkout configured at `http://localhost:8929/`.
 
 ```bash
 MAHO_BROWSER_PORT=8929 vendor/bin/pest vendor/ugoparsi/module-deleted-category-redirects/tests/Integration/DeletedCategoryFallbackTest.php
