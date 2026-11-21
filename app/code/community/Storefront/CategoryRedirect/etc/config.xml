@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--
+SPDX-FileCopyrightText: 2026 Maho <https://mahocommerce.com>
+SPDX-License-Identifier: AFL-3.0
+-->
+<config>
+    <modules>
+        <Storefront_CategoryRedirect>
+            <version>0.1.0</version>
+        </Storefront_CategoryRedirect>
+    </modules>
+    <default>
+        <catalog>
+            <seo>
+                <redirect_deleted_category_to_parent>0</redirect_deleted_category_to_parent>
+            </seo>
+        </catalog>
+    </default>
+</config>

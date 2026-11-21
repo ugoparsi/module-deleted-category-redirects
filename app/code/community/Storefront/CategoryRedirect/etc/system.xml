@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!--
+SPDX-FileCopyrightText: 2026 Maho <https://mahocommerce.com>
+SPDX-License-Identifier: AFL-3.0
+-->
+<config>
+    <sections>
+        <catalog>
+            <groups>
+                <seo>
+                    <fields>
+                        <redirect_deleted_category_to_parent translate="label comment" module="catalog">
+                            <label>Redirect Deleted Categories to a Parent</label>
+                            <comment>Redirect old category URLs to the closest available parent in this store view.</comment>
+                            <frontend_type>boolean</frontend_type>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </redirect_deleted_category_to_parent>
+                    </fields>
+                </seo>
+            </groups>
+        </catalog>
+    </sections>
+</config>

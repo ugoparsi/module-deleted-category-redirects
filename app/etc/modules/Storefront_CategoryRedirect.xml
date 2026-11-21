@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--
+SPDX-FileCopyrightText: 2026 Maho <https://mahocommerce.com>
+SPDX-License-Identifier: AFL-3.0
+-->
+<config>
+    <modules>
+        <Storefront_CategoryRedirect>
+            <active>true</active>
+            <codePool>community</codePool>
+            <depends>
+                <Mage_Catalog/>
+                <Mage_Cms/>
+            </depends>
+        </Storefront_CategoryRedirect>
+    </modules>
+</config>
